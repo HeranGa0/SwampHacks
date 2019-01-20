@@ -68,11 +68,12 @@ class DotMap {
             this.gradeStats["f"]++;
         this.gradeStats["total"]++;
         this.calculate();
+        this.canvas.options.data[0].dataPoints = this.dataPoint;
         this.display();
     }
 }
 
-
+let g_chart=0;
 function loadFileAsText() {
 
     var fileToLoad = document.getElementById("myFile").files[0];
@@ -90,9 +91,16 @@ function loadFileAsText() {
             // dataset.push({x:line,y:line+1})
         }
         let chart = new DotMap(dataset);
+        g_chart = chart;
         chart.display();
 
     };
     reader.readAsText(fileToLoad);
+
+}
+function submit() {
+    let inputGrade = document.getElementById("input").value;
+    console.log(inputGrade);
+    g_chart.updateWithNewData(inputGrade);
 
 }
